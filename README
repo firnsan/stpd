@@ -1,0 +1,22 @@
+编译：
+mkdir bin
+cd bin
+cmake ..
+make
+
+思路：
+1.新建一个clientproxy-->serverproxy的连接之前，检查是否已经有去往特定域名(比如www.baidu.com)的连接。没有的话才创建新连接。
+2.新建一个clientproxy-->serverproxy的连接后,需要一个线程，来仲裁从serverproxy到来的response对应那个客户的request。
+3.把客户的request序列化,通过reqid唯一标识
+
+stpd的request包示意：
+reqid=3 \r\n
+GET http://www.baidu.com HTTP/1.1 \r\n
+\r\n\r\n
+stpd的response包示意：
+reqid=3 \r\n
+HTTP/1.1 200 OK
+\r\n\r\n
+
+
+
